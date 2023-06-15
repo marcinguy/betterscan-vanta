@@ -54,13 +54,13 @@ access_token = response['access_token']
 # Here access and refresh token may be used with self.refresh_token
 
 url = "https://api.vanta.com/v1/resources/static_analysis_code_vulnerability_connectors/sync_all"
-'''
+
 os.environ["CODE_DIR"] = os.getcwd()
 os.system("docker run -e CODE_DIR -e LIC -e SNYK_TOKEN -v ${PWD}:${PWD}  -ti  scanmycode/scanmycode3-ce:worker-cli /bin/sh -c 'cd $CODE_DIR && git config --global --add safe.directory $CODE_DIR &&  checkmate init'")
 os.system("docker run -e CODE_DIR -e LIC -e SNYK_TOKEN -v ${PWD}:${PWD}  -ti  scanmycode/scanmycode3-ce:worker-cli /bin/sh -c 'cd $CODE_DIR && git config --global --add safe.directory $CODE_DIR && checkmate git init'")
 os.system("docker run -e CODE_DIR -e LIC -e SNYK_TOKEN -v ${PWD}:${PWD}  -ti  scanmycode/scanmycode3-ce:worker-cli /bin/sh -c 'cd $CODE_DIR && git config --global --add safe.directory $CODE_DIR && checkmate git analyze --branch `git rev-parse --abbrev-ref HEAD`'")
 os.system("docker run -e CODE_DIR -e LIC -e SNYK_TOKEN -v ${PWD}:${PWD}  -ti  scanmycode/scanmycode3-ce:worker-cli /bin/sh -c 'cd $CODE_DIR && git config --global --add safe.directory $CODE_DIR && checkmate issues html'")
-'''
+
 f = open("report.json")
 report = json.load(f)
 
@@ -104,7 +104,7 @@ headers = {
     "content-type": "application/json",
     "authorization": "Bearer "+access_token
 }
-pprint.pprint(payload)
-response = requests.put(url, json=payload, headers=headers)
+print(json.dumps(payload)
+response = requests.put(url, json=json.dumps(payload), headers=headers)
 
 print(response.text)

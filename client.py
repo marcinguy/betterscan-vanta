@@ -12,9 +12,9 @@ logging.basicConfig(level=logging.DEBUG,
                     format='%(levelname)5s - %(name)s -  %(message)s')
 
 scopes = ['connectors.self:write-resource', 'connectors.self:read-resource']
-client_id = "vci_"
-client_secret = "vcs_"
-source_id = "acct1234"
+client_id = os.environ['CLIENT_ID']
+client_secret = os.environ['CLIENT_SECRET']
+source_id = os.environ['SOURCE_ID']
 
 
 tokens = {}
@@ -117,7 +117,7 @@ for item in report:
     vuln["occurrences"] = vulns
     payload["resources"].append(vuln)
     payload["sourceId"] = source_id
-    payload["resourceId"] = "6482f64c865e267eff077874"
+    payload["resourceId"] = os.environ['RESOURCE_ID']
     vuln = {}
     vuln1 = {}
     vulns = []

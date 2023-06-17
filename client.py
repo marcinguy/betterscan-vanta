@@ -133,7 +133,7 @@ print(json.dumps(payload))
 response = requests.put(url, json=json.dumps(payload), headers=headers)
 print(response.text)
 
-if response.status_code == 401:
+if response.status_code != 200:
 
     f = open("tokens.json", "r")
     tokens = json.load(f)

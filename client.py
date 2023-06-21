@@ -160,6 +160,10 @@ if response.status_code == 401:
 
 #response = json.loads(response.text)
 
+f = open("tokens.json", "r")
+tokens = json.load(f)
+f.close()
+
 url = "https://api.vanta.com/v1/resources/static_analysis_code_vulnerability_connectors/sync_all"
 
 
@@ -235,6 +239,6 @@ if response.status_code == 401:
     }
     
     
-    response = requests.put(url, json=json.dumps(payload), headers=headers)
+    response = requests.put(url, json=payload, headers=headers)
     print(response.text)
 

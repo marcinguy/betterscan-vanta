@@ -50,5 +50,19 @@ jobs:
            sudo chown -R "${USER:-$(id -un)}" .
 ```
 
-It will run every hour pushing resulta to Vanat
-           
+It will run every hour pushing resulta to Vanta
+
+Will look like this
+
+Date: 21/06/2023
+
+![image](https://github.com/marcinguy/betterscan-vanta/assets/20355405/a1b25054-330e-4637-959d-c8c232bfb837)
+
+Here is connected integration:
+
+![image](https://github.com/marcinguy/betterscan-vanta/assets/20355405/a1f24f9c-ff5a-4191-8368-3f2417000b89)
+
+and required and approperiate resources:
+
+![image](https://github.com/marcinguy/betterscan-vanta/assets/20355405/b6f17219-c519-4915-a70a-861812535903)
+

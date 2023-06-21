@@ -49,6 +49,12 @@ jobs:
         if: steps.verify_diff.outputs.changed == 'true'
         run: |
            sudo chown -R "${USER:-$(id -un)}" .
+           git config --global user.email "bot@betterscan.io"
+           git config --global user.name "Betterscan.io Bot"
+           git add .checkmate/tokens.json && git commit -m "tokens"
+           git push origin `git rev-parse --abbrev-ref HEAD`
+
+  
 ```
 
 It will run every hour pushing resulta to Vanta

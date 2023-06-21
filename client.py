@@ -1,8 +1,16 @@
+'''
+Need cleanup. WIP
+'''
+
 import os
+import secrets
 import logging
 import json
 import pprint
+import time
+import datetime
 import requests
+
 from collections import defaultdict
 from oauth2_client.credentials_manager import CredentialManager, ServiceInformation, OAuthError
 from oauth2_client.http_server import read_request_parameters, _ReuseAddressTcpServer
@@ -15,7 +23,8 @@ scopes = ['connectors.self:write-resource', 'connectors.self:read-resource']
 client_id = os.environ['CLIENT_ID']
 client_secret = os.environ['CLIENT_SECRET']
 source_id = os.environ['SOURCE_ID']
-
+vulncomponent=os.environ['RESOURCE_ID_VULNCOMP'] # VulnerableComponent
+sast=os.environ['RESOURCE_ID_SAST'] # StaticAnalysisCodeVulnerabilityConnectors
 
 tokens = {}
 try:
@@ -67,7 +76,8 @@ if not tokens["access_token"]:
   response = json.loads(x.text)
   access_token = response['access_token']
   refresh_token = response['refresh_token']
-
+  # _logger.debug('Access got = %s', manager._access_token)
+  # Here access and refresh token may be used with self.refresh_token
   tokens["access_token"] = access_token
   tokens["refresh_token"] = refresh_token
   pprint.pprint(tokens)
@@ -75,9 +85,6 @@ if not tokens["access_token"]:
   f = open("tokens.json","w")
   f.write(json.dumps(tokens))
   f.close()
-
-url = "https://api.vanta.com/v1/resources/static_analysis_code_vulnerability_connectors/sync_all"
-
 '''
 os.environ["CODE_DIR"] = os.getcwd()
 os.system("docker run -e CODE_DIR -e LIC -e SNYK_TOKEN -v ${PWD}:${PWD}  -ti  scanmycode/scanmycode3-ce:worker-cli /bin/sh -c 'cd $CODE_DIR && git config --global --add safe.directory $CODE_DIR &&  checkmate init'")
@@ -85,10 +92,77 @@ os.system("docker run -e CODE_DIR -e LIC -e SNYK_TOKEN -v ${PWD}:${PWD}  -ti  sc
 os.system("docker run -e CODE_DIR -e LIC -e SNYK_TOKEN -v ${PWD}:${PWD}  -ti  scanmycode/scanmycode3-ce:worker-cli /bin/sh -c 'cd $CODE_DIR && git config --global --add safe.directory $CODE_DIR && checkmate git analyze --branch `git rev-parse --abbrev-ref HEAD`'")
 os.system("docker run -e CODE_DIR -e LIC -e SNYK_TOKEN -v ${PWD}:${PWD}  -ti  scanmycode/scanmycode3-ce:worker-cli /bin/sh -c 'cd $CODE_DIR && git config --global --add safe.directory $CODE_DIR && checkmate issues html'")
 '''
+url = "https://api.vanta.com/v1/resources/vulnerable_component/sync_all"
 
 f = open("report.json","r")
 report = json.load(f)
 f.close()
+
+payload = {}
+payload["resources"] = []
+vuln = {}
+
+for item in report:
+    vuln["targetType"] = "CODE_REPOSITORY"
+    vuln["displayName"] = item["description"]
+    vuln["uniqueId"] = item["hash"]
+    vuln["externalUrl"] = "none"
+    vuln["collectedTimestamp"] = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ") 
+    vuln["name"] = item["file"]
+    vuln["description"] = item["description"]
+    payload["resources"].append(vuln)
+    payload["sourceId"] = source_id
+    payload["resourceId"] = vulncomponent
+    vuln = {}
+
+
+
+headers = {
+    "accept": "application/json",
+    "content-type": "application/json",
+    "authorization": "Bearer "+tokens["access_token"]
+
+
+}
+print(json.dumps(payload, default=str))
+response = requests.put(url, json=payload, headers=headers)
+print(response.text)
+
+if response.status_code == 401:
+
+    f = open("tokens.json", "r")
+    tokens = json.load(f)
+    f.close()
+    refresh_payload = {'client_id': client_id,
+           'client_secret': client_secret,
+           'refresh_token': tokens["refresh_token"],
+           'grant_type': "refresh_token"
+    }
+
+    x = requests.post("http://api.vanta.com/oauth/token", json=refresh_payload)
+    tokens_response = json.loads(x.text)
+
+    f = open("tokens.json","w")
+    f.write(json.dumps(tokens_response))
+    f.close()
+
+    headers = {
+    "accept": "application/json",
+    "content-type": "application/json",
+    "authorization": "Bearer "+tokens_response["access_token"]
+    }
+
+
+    response = requests.put(url, json=payload, headers=headers)
+    print(response.text)
+
+
+
+#response = json.loads(response.text)
+
+url = "https://api.vanta.com/v1/resources/static_analysis_code_vulnerability_connectors/sync_all"
+
+
 
 payload = {}
 payload["resources"] = []
@@ -101,7 +175,7 @@ vulns = []
 i = 0
 for item in report:
     vuln["displayName"] = item["description"]
-    vuln["uniqueId"] = item["hash"]
+    vuln["uniqueId"] = secrets.token_hex(nbytes=16)
     vuln["externalUrl"] = "none"
     vuln["severity"] = 10
     vuln["confidence"] = 10
@@ -119,7 +193,7 @@ for item in report:
     vuln["occurrences"] = vulns
     payload["resources"].append(vuln)
     payload["sourceId"] = source_id
-    payload["resourceId"] = os.environ['RESOURCE_ID']
+    payload["resourceId"] = sast
     vuln = {}
     vuln1 = {}
     vulns = []
@@ -132,7 +206,7 @@ headers = {
 }
 print(headers)
 print(json.dumps(payload))
-response = requests.put(url, json=json.dumps(payload), headers=headers)
+response = requests.put(url, json=payload, headers=headers)
 print(response.text)
 
 if response.status_code == 401:
@@ -140,15 +214,16 @@ if response.status_code == 401:
     f = open("tokens.json", "r")
     tokens = json.load(f)
     f.close()
-    payload = {'client_id': client_id,
+    refresh_payload = {'client_id': client_id,
            'client_secret': client_secret,
            'refresh_token': tokens["refresh_token"],
            'grant_type': "refresh_token"
     }
 
-    x = requests.post("http://api.vanta.com/oauth/token", json=payload)
+    x = requests.post("http://api.vanta.com/oauth/token", json=refresh_payload)
     tokens_response = json.loads(x.text)
 
+  
     f = open("tokens.json","w")
     f.write(json.dumps(tokens_response))
     f.close()
@@ -162,3 +237,4 @@ if response.status_code == 401:
     
     response = requests.put(url, json=json.dumps(payload), headers=headers)
     print(response.text)
+

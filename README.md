@@ -69,6 +69,11 @@ Here is connected integration:
 
 ![image](https://github.com/marcinguy/betterscan-vanta/assets/20355405/a1f24f9c-ff5a-4191-8368-3f2417000b89)
 
+via these settings:
+
+![image](https://github.com/marcinguy/betterscan-vanta/assets/20355405/230127dc-5831-498a-a9ad-e708e15764cc)
+
+
 and required and approperiate resources:
 
 ![image](https://github.com/marcinguy/betterscan-vanta/assets/20355405/b6f17219-c519-4915-a70a-861812535903)

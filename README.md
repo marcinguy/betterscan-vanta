@@ -13,7 +13,8 @@ env:
   CLIENT_ID: ${{secrets.CLIENT_ID}}
   CLIENT_SECRET: ${{secrets.CLIENT_SECRET}}
   SOURCE_ID: ${{secrets.SOURCE_ID}}
-  RESOURCE_ID: ${{secrets.RESOURCE_ID}}
+  RESOURCE_ID_VULNCOMP: ${{secrets.RESOURCE_ID_VULNCOMP}}
+  RESOURCE_ID_SAST: ${{secrets.RESOURCE_ID_SAST}}
   LIC: ${{secrets.LIC}}
   
 

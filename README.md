@@ -3,13 +3,13 @@ Betterscan.io Vanta.com Integration
 
 
 
-Run on Computer/server to connect via Oauth2. tokens.json will be generated. Upload tokens.json to desired repo you want to integrate into Vanta under .checkmate folder
+Run on Computer/server to connect via Oauth2. `tokens.json` will be generated. Upload `tokens.json` to desired repo you want to integrate into Vanta under .checkmate folder
 
 You can use a job in any CI/CD to run in at intervals.
 
 Below is sample for use with private GitHub repos. GitHub actions are free also for private repos.
 
-Add this to .github/workflows/betterscan-vanta.yml (creating GitHub action)
+Add this to `.github/workflows/betterscan-vanta.yml` (creating GitHub action)
 
 
 ```

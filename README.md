@@ -1,9 +1,52 @@
 # betterscan-vanta
 Betterscan.io Vanta.com Integration
 
+In order to integrate it, get a Vanta subscription. 
+
+In you Vanta installation to to `Settings->Developer Console`
 
 
-Run on Computer/server to connect via Oauth2. `tokens.json` will be generated. Upload `tokens.json` to desired repo you want to integrate into Vanta under .checkmate folder
+
+Click `Create+`
+
+![image](https://github.com/marcinguy/betterscan-vanta/assets/20355405/8c8713c8-df8b-4864-be31-d9478b639bac)
+
+*Fig. 1*
+
+Fill out this info:
+
+![image](https://github.com/marcinguy/betterscan-vanta/assets/20355405/d5f78bb5-b5ed-4de8-a5a9-be28409c5af1)
+
+*Fig. 2*
+
+Click `Generate Oauth secret`
+
+Clck `Save`
+
+Run on your Computer/serve
+
+`python client.py`
+
+It will connect via Oauth2 to Vanta. `tokens.json` will be generated. Upload `tokens.json` to desired repo you want to integrate into Vanta under .checkmate folder
+
+Create approperiate resources
+
+![image](https://github.com/marcinguy/betterscan-vanta/assets/20355405/b549f5df-f71b-4599-b9e8-39a6f598e1cd)
+
+*Fig. 3*
+
+`VulnerableComponent` and `StaticAnalysisCodeVulnerabilityConnectors`
+
+Set those as Environmenta variables:
+
+```
+CLIENT_ID:
+CLIENT_SECRET: 
+SOURCE_ID: 
+RESOURCE_ID_VULNCOMP:
+RESOURCE_ID_SAST: 
+LIC: 
+```
 
 You can use a job in any CI/CD to run in at intervals.
 
@@ -69,16 +112,22 @@ Date: 21/06/2023
 
 ![image](https://github.com/marcinguy/betterscan-vanta/assets/20355405/a1b25054-330e-4637-959d-c8c232bfb837)
 
+*Fig. 4*
+
 Here is connected integration:
 
 ![image](https://github.com/marcinguy/betterscan-vanta/assets/20355405/a1f24f9c-ff5a-4191-8368-3f2417000b89)
+
+*Fig. 5*
 
 via these settings:
 
 ![image](https://github.com/marcinguy/betterscan-vanta/assets/20355405/230127dc-5831-498a-a9ad-e708e15764cc)
 
+*Fig. 6*
 
 and required and approperiate resources:
 
 ![image](https://github.com/marcinguy/betterscan-vanta/assets/20355405/b6f17219-c519-4915-a70a-861812535903)
 
+*Fig. 7*

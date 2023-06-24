@@ -3,7 +3,7 @@ Betterscan.io Vanta.com Integration
 
 In order to integrate it, get a Vanta subscription. 
 
-In you Vanta installation to to `Settings->Developer Console`
+In you Vanta installation go to `Settings->Developer Console`
 
 
 

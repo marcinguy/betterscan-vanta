@@ -1,5 +1,23 @@
 # betterscan-vanta
+
+Table of Contents
+=================
+
+* [betterscan-vanta](#betterscan-vanta)
+   * [Installation](#installation)
+      * [Crate Application](#crate-application)
+      * [Connect to Vanta using Oauth2](#connect-to-vanta-using-oauth2)
+      * [Create approperiate resource in Vanta](#create-approperiate-resource-in-vanta)
+      * [Run in CI/CI](#run-in-cici)
+         * [Run in GitHub Action](#run-in-github-action)
+      * [Sample screenshots](#sample-screenshots)
+
+
+## Installation
+
 Betterscan.io Vanta.com Integration
+
+### Crate Application
 
 In order to integrate it, get a Vanta subscription. 
 
@@ -23,11 +41,15 @@ Click `Generate Oauth secret`
 
 Clck `Save`
 
+### Connect to Vanta using Oauth2
+
 Run on your Computer/server
 
 `python client.py`
 
 It will connect via Oauth2 to Vanta. `tokens.json` will be generated. Upload `tokens.json` to desired repo you want to integrate into Vanta under .checkmate folder
+
+### Create approperiate resource in Vanta
 
 Create approperiate resources
 
@@ -36,6 +58,8 @@ Create approperiate resources
 *Fig. 3*
 
 `VulnerableComponent` and `StaticAnalysisCodeVulnerabilityConnectors`
+
+### Run in CI/CI
 
 Set those as Environmenta variables:
 
@@ -49,6 +73,8 @@ LIC:
 ```
 
 You can use a job in any CI/CD to run in at intervals.
+
+#### Run in GitHub Action
 
 Below is sample for use with private GitHub repos. GitHub actions are free also for private repos.
 
@@ -105,6 +131,8 @@ jobs:
 ```
 
 It will run every hour pushing resulta to Vanta
+
+### Sample screenshots
 
 Will look like this
 

@@ -23,7 +23,7 @@ Click `Generate Oauth secret`
 
 Clck `Save`
 
-Run on your Computer/serve
+Run on your Computer/server
 
 `python client.py`
 

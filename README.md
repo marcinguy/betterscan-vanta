@@ -5,7 +5,7 @@ Table of Contents
 
 * [betterscan-vanta](#betterscan-vanta)
    * [Installation](#installation)
-      * [Crate Application](#crate-application)
+      * [Create Application](#create-application)
       * [Connect to Vanta using Oauth2](#connect-to-vanta-using-oauth2)
       * [Create approperiate resource in Vanta](#create-approperiate-resource-in-vanta)
       * [Run in CI/CI](#run-in-cici)
@@ -17,7 +17,7 @@ Table of Contents
 
 Betterscan.io Vanta.com Integration
 
-### Crate Application
+### Create Application
 
 In order to integrate it, get a Vanta subscription. 
 
